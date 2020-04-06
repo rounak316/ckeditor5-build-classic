@@ -5,6 +5,7 @@
 
 // The editor creator to use.
 import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
 import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
@@ -30,7 +31,7 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 
-export default class ClassicEditor extends ClassicEditorBase {}
+export default class ClassicEditor extends ClassicEditorBase { }
 
 // Plugins to include in the build.
 ClassicEditor.builtinPlugins = [
@@ -61,6 +62,7 @@ ClassicEditor.builtinPlugins = [
 
 // Editor configuration.
 ClassicEditor.defaultConfig = {
+	plugins: [ SimpleUploadAdapter ],
 	toolbar: {
 		items: [
 			'heading',
@@ -76,7 +78,7 @@ ClassicEditor.defaultConfig = {
 			'|',
 			'imageUpload',
 			'blockQuote',
-			'insertTable',
+
 			'mediaEmbed',
 			'undo',
 			'redo'
@@ -96,6 +98,17 @@ ClassicEditor.defaultConfig = {
 			'tableRow',
 			'mergeTableCells'
 		]
+	},
+
+	simpleUpload: {
+		// The URL that the images are uploaded to.
+		uploadUrl: 'http://localhost:5000/upload/editor',
+
+		// Headers sent along with the XMLHttpRequest to the upload server.
+		headers: {
+
+			Authorization: 'Bearer <JSON Web Token>'
+		}
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
 	language: 'en'
